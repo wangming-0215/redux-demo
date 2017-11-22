@@ -162,3 +162,9 @@ export default VisibleTodoList;
 ## 高级
 
 ### 异步Action
+
+当调用异步API时，有两个非常关键的时刻：发起请求的时刻，和接收到响应的时刻。这两种时刻都可能会更改应用的state，一般情况下，需要dispatch至少三中action：
+
+1. 一种通知reducer请求开始的action；
+1. 一种通知reducer请求成功的action；
+1. 一种通知reducer请求失败的action。
