@@ -182,3 +182,7 @@ export default VisibleTodoList;
 ### Redux middleware
 
 Redux middleware被用于解决不同的问题，它提供的是位于action被发起之后，到达reducer之前的扩展点。可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等等。
+
+每一个middleware都可以操作或者调用前一个middleware包装过的`store.dispatch()`。
+
+middleware接收了一个`next()`的dispatch函数，并返回一个dispatch函数，返回的函数会被作为下一个middleware的`next()`，以此类推。由于store中类似getState()的方法依旧非常有用，将store作为顶层的参数，使得它可以在所有的middleware中被使用。
