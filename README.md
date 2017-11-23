@@ -8,6 +8,8 @@
     - [搭配react](#%E6%90%AD%E9%85%8Dreact)
   - [高级](#%E9%AB%98%E7%BA%A7)
     - [异步Action](#%E5%BC%82%E6%AD%A5action)
+    - [异步数据流](#%E5%BC%82%E6%AD%A5%E6%95%B0%E6%8D%AE%E6%B5%81)
+    - [Redux middleware](#redux-middleware)
     
 # redux
 
@@ -168,3 +170,15 @@ export default VisibleTodoList;
 1. 一种通知reducer请求开始的action；
 1. 一种通知reducer请求成功的action；
 1. 一种通知reducer请求失败的action。
+
+通过使用指定的middleware，action创建函数除了返回action对象，还可以返回函数，这是action创建函数就成为了thunk。
+
+当action创建函数返回函数时，这个函数会被redux-thunk middleware执行，这个函数并不需要保持纯净，它还可以带有副作用，包括执行异步api请求。这个函数还可以dispatch action
+
+### 异步数据流
+
+当middleware链中的最后一个middleware开始dispatch action的时候，这个action必须是一个普通对象。
+
+### Redux middleware
+
+Redux middleware被用于解决不同的问题，它提供的是位于action被发起之后，到达reducer之前的扩展点。可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等等。

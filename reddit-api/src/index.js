@@ -1,26 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import App from './components/app';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
+import { selectSubreddit, fetchPosts } from './actions/actions';
+import rootReducer from './reducers/reducers';
 
-let root = document.querySelector('#root');
-if (!root) {
-  root = document.createElement('div');
-  root.id = 'root';
-  document.body.appendChild(root);
-}
+const loggerMiddleware = createLogger();
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunkMiddleware, loggerMiddleware)
+);
 
-const render = Component => {
-  ReactDOM.render(
-    <AppContainer>
-      <Component />
-    </AppContainer>,
-    root
-  );
-};
-
-render(App);
-
-if (module.hot) {
-  module.hot.accept('./components/app', () => render(App));
-}
+store.dispatch(selectSubreddit('reactjs'));
+store.dispatch(fetchPosts('reactjs')).then(() => console.log(store.getState()));
